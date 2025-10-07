@@ -1,1124 +1,1508 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Torneo El Cristo — Tabla y Próximos Encuentros</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-:root{
-  --bg: #0a0e17;
-  --card: #0f1421;
-  --accent1: #00f5ff;
-  --accent2: #ff00aa;
-  --accent3: #00ff87;
-  --accent4: #ffd700;
-  --muted: #8a94a7;
-  --white: #f0f6ff;
-  --glass: rgba(255,255,255,0.05);
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-}
-*{box-sizing:border-box; margin:0; padding:0;}
-body{
-  margin:0;
-  min-height:100vh;
-  background:
-    radial-gradient(ellipse at 20% 20%, rgba(0, 245, 255, 0.1) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 80%, rgba(255, 0, 170, 0.1) 0%, transparent 50%),
-    radial-gradient(ellipse at 40% 40%, rgba(0, 255, 135, 0.05) 0%, transparent 50%),
-    linear-gradient(160deg, #0a0e17 0%, #0d1220 100%);
-  color:var(--white);
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  padding:12px;
-  overflow-x: hidden;
-}
-.container{
-  max-width:1100px;
-  margin:0 auto;
-  display:grid;
-  grid-template-columns:1fr;
-  gap:20px;
-}
-
-/* Header con estilo mundial */
-header.tournament{
-  background: 
-    radial-gradient(ellipse at top, rgba(0, 245, 255, 0.15) 0%, transparent 70%),
-    linear-gradient(135deg, rgba(0, 245, 255, 0.1) 0%, rgba(255, 0, 170, 0.1) 100%);
-  border-radius:20px;
-  padding:20px;
-  position:relative;
-  overflow:hidden;
-  border: 1px solid rgba(0, 245, 255, 0.2);
-  box-shadow: 
-    0 0 30px rgba(0, 245, 255, 0.2),
-    0 10px 30px rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(10px);
-}
-header.tournament::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3));
-  box-shadow: 0 0 10px var(--accent1), 0 0 20px var(--accent2);
-}
-header.tournament::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba(255, 0, 170, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(0, 245, 255, 0.1) 0%, transparent 50%);
-  pointer-events: none;
-}
-header .tourney-info{
-  text-align:center;
-  margin-top:12px;
-  position:relative;
-  z-index:1;
-}
-header h1{
-  margin:0;
-  font-size:32px;
-  letter-spacing:2px;
-  background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  text-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
-  position:relative;
-  display:inline-block;
-  font-weight: 800;
-}
-header h1::after {
-  content: "";
-  position: absolute;
-  bottom: -8px;
-  left: 10%;
-  width: 80%;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, var(--accent1), var(--accent2), var(--accent3), transparent);
-  box-shadow: 0 0 10px var(--accent1);
-}
-header p{
-  margin:8px 0;
-  font-size:16px;
-  color: var(--muted);
-}
-header .buttons{
-  display:flex;
-  flex-wrap:wrap;
-  gap:15px;
-  margin-top:20px;
-  justify-content:center;
-  width:100%;
-}
-header .buttons a{
-  flex:1 1 160px;
-  padding:14px 20px;
-  border-radius:12px;
-  font-weight:700;
-  color:var(--white);
-  text-decoration:none;
-  text-align:center;
-  box-shadow:0 6px 18px rgba(0,0,0,0.4);
-  transition: all 0.3s ease;
-  position:relative;
-  overflow:hidden;
-  z-index: 1;
-  border: 1px solid rgba(255,255,255,0.1);
-  backdrop-filter: blur(5px);
-}
-header .buttons a::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-  transition: left 0.6s;
-  z-index: -1;
-}
-header .buttons a:hover::before {
-  left: 100%;
-}
-header .buttons a:hover{
-  transform:translateY(-5px);
-  box-shadow:0 10px 25px rgba(0,0,0,0.5);
-}
-header .buttons a:first-child {
-  background: linear-gradient(135deg, var(--accent1), #008cff);
-  box-shadow: 0 0 15px rgba(0, 245, 255, 0.5);
-}
-header .buttons a:last-child {
-  background: linear-gradient(135deg, var(--accent2), #ff2a6d);
-  box-shadow: 0 0 15px rgba(255, 0, 170, 0.5);
-}
-
-/* Layout principal */
-main.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
-  align-items:start;
-}
-
-/* Tarjetas con estilo futurista */
-.card{
-  background: 
-    linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
-  border-radius:16px;
-  padding:20px;
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 8px 25px rgba(2,6,23,0.4);
-  position:relative;
-  overflow:hidden;
-  transition: all 0.4s ease;
-  backdrop-filter: blur(10px);
-}
-.card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent1), transparent);
-}
-.card:hover {
-  transform: translateY(-8px);
-  box-shadow: 
-    0 15px 30px rgba(0,0,0,0.6),
-    0 0 15px rgba(0, 245, 255, 0.2);
-  border-color: rgba(0, 245, 255, 0.3);
-}
-.card h3 {
-  margin-top: 0;
-  color: var(--accent1);
-  position: relative;
-  display: inline-block;
-  padding-bottom: 8px;
-  font-size: 20px;
-  font-weight: 700;
-}
-.card h3::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 50px;
-  height: 3px;
-  background: var(--accent1);
-  box-shadow: 0 0 8px var(--accent1);
-}
-
-/* Tabla de posiciones con estilo especial */
-table{
-  width:100%;
-  border-collapse:collapse;
-  font-size:14px;
-  border-radius: 10px;
-  overflow: hidden;
-}
-table thead th{
-  text-align:left;
-  padding:12px 10px;
-  color:var(--muted);
-  font-weight:600;
-  font-size:13px;
-  border-bottom:1px solid rgba(255,255,255,0.1);
-  background: rgba(0, 0, 0, 0.3);
-}
-table tbody tr {
-  transition: all 0.3s ease;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-}
-table tbody tr:hover {
-  background: rgba(0, 245, 255, 0.1);
-  transform: scale(1.01);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-table tbody td{
-  padding:12px 10px;
-  border-bottom:1px solid rgba(255,255,255,0.05);
-}
-.team-name{
-  display:flex;
-  gap:10px;
-  align-items:center;
-}
-.badge{
-  width:36px;
-  height:36px;
-  border-radius:10px;
-  background: var(--glass);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:700;
-  color:var(--white);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-  transition: all 0.3s ease;
-  border: 1px solid rgba(255,255,255,0.1);
-  font-size: 14px;
-}
-.team-name:hover .badge {
-  transform: scale(1.2) rotate(5deg);
-  box-shadow: 0 0 10px var(--accent1);
-}
-td.center{
-  text-align:center;
-  font-weight: 600;
-}
-
-/* Posiciones destacadas con estilo mundial */
-.position-1 { 
-  background: linear-gradient(90deg, rgba(255, 215, 0, 0.15), transparent);
-  border-left: 4px solid var(--accent4);
-  box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.1);
-}
-.position-2 { 
-  background: linear-gradient(90deg, rgba(192,192,192, 0.1), transparent);
-  border-left: 4px solid #c0c0c0;
-}
-.position-3 { 
-  background: linear-gradient(90deg, rgba(205,127,50, 0.1), transparent);
-  border-left: 4px solid #cd7f32;
-}
-
-/* Próximos Encuentros con estilo futurista */
-.matches-list{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-.match-card{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:15px;
-  border-radius:14px;
-  background: linear-gradient(135deg, rgba(0, 245, 255, 0.08), rgba(255, 0, 170, 0.08));
-  border: 1px solid rgba(255,255,255,0.1);
-  box-shadow:0 5px 15px rgba(0,0,0,0.3);
-  transition:all 0.3s ease;
-  flex-wrap:wrap;
-  position:relative;
-  overflow:hidden;
-}
-.match-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 5px;
-  height: 100%;
-  background: linear-gradient(to bottom, var(--accent1), var(--accent2));
-  box-shadow: 0 0 10px var(--accent1);
-}
-.match-card:hover{
-  transform:translateY(-5px);
-  box-shadow:0 8px 20px rgba(0,0,0,0.4), 0 0 15px rgba(0, 245, 255, 0.2);
-}
-.match-teams{
-  display:flex;
-  gap:8px;
-  align-items:center;
-  font-weight:700;
-  font-size:15px;
-  flex-wrap:wrap;
-}
-.match-vs{
-  color:var(--muted);
-  font-weight:500;
-  margin:0 10px;
-}
-.match-time{
-  color:var(--accent1);
-  font-size:14px;
-  font-weight:600;
-  flex:1;
-  text-align:right;
-  text-shadow: 0 0 5px rgba(0, 245, 255, 0.5);
-}
-
-/* Equipos participantes */
-.lemas-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-.lema{
-  padding:12px;
-  border-radius:12px;
-  background:linear-gradient(145deg, rgba(255,255,255,0.03), transparent);
-  border:1px solid rgba(255,255,255,0.05);
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-.lema::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--accent1), var(--accent2));
-}
-.lema:hover {
-  transform: translateY(-5px);
-  background: linear-gradient(145deg, rgba(255,255,255,0.05), transparent);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
-.lema h4{
-  margin:0 0 6px 0;
-  font-size:15px;
-  color:var(--accent1);
-  font-weight: 700;
-}
-.lema p{
-  margin:0;
-  color:var(--muted);
-  font-size:13px;
-}
-
-/* Información de tarifas mejorada */
-.info-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
-  gap: 15px;
-}
-.info-item {
-  padding: 15px;
-  border-radius: 14px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.08);
-  text-align: center;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  backdrop-filter: blur(5px);
-}
-.info-item::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--accent1), var(--accent2));
-  box-shadow: 0 0 10px var(--accent1);
-}
-.info-item:hover {
-  transform: translateY(-5px);
-  background: rgba(255,255,255,0.05);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-}
-.info-item h4 {
-  color: var(--accent1);
-  margin-top: 0;
-  font-size: 16px;
-}
-.info-item p {
-  font-weight: 600;
-  margin-bottom: 0;
-  font-size: 15px;
-}
-
-/* Tabla de goleadores mejorada */
-.goleador-row {
-  transition: all 0.3s ease;
-}
-.goleador-row:hover {
-  background: rgba(0, 245, 255, 0.1);
-  transform: scale(1.02);
-}
-
-/* Footer mejorado */
-footer.note{
-  text-align:center;
-  color:var(--muted);
-  font-size:14px;
-  margin-top:20px;
-  padding: 15px;
-  border-radius: 12px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.08);
-  backdrop-filter: blur(5px);
-}
-
-/* Elementos decorativos */
-.floating-elements {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 0;
-}
-.floating-element {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  background: var(--accent1);
-  border-radius: 50%;
-  opacity: 0.5;
-  animation: float 6s infinite ease-in-out;
-}
-.floating-element:nth-child(2) {
-  width: 6px;
-  height: 6px;
-  background: var(--accent2);
-  animation-delay: 1s;
-  top: 20%;
-  left: 10%;
-}
-.floating-element:nth-child(3) {
-  width: 8px;
-  height: 8px;
-  background: var(--accent3);
-  animation-delay: 2s;
-  top: 70%;
-  left: 80%;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0) translateX(0); }
-  50% { transform: translateY(-20px) translateX(10px); }
-}
-
-/* Animaciones adicionales */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.card, header.tournament {
-  animation: fadeIn 0.6s ease forwards;
-}
-
-/* Efecto de brillo en elementos interactivos */
-.glow-on-hover {
-  position: relative;
-  overflow: hidden;
-}
-.glow-on-hover::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-  transform: scale(0);
-  transition: transform 0.5s;
-  pointer-events: none;
-}
-.glow-on-hover:hover::after {
-  transform: scale(1);
-}
-
-/* ============================
-   RESPONSIVE DESIGN
-   ============================ */
-
-/* Tablets y pantallas medianas */
-@media (max-width: 1024px) {
-  .container {
-    gap: 16px;
-  }
-  
-  header.tournament {
-    padding: 18px;
-  }
-  
-  header h1 {
-    font-size: 28px;
-  }
-  
-  .card {
-    padding: 18px;
-  }
-  
-  main.grid {
-    gap: 16px;
-  }
-  
-  .lemas-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-/* Tablets pequeñas */
-@media (max-width: 768px) {
-  body {
-    padding: 10px;
-  }
-  
-  .container {
-    gap: 14px;
-  }
-  
-  header.tournament {
-    padding: 16px;
-  }
-  
-  header h1 {
-    font-size: 24px;
-  }
-  
-  header p {
-    font-size: 14px;
-  }
-  
-  .card {
-    padding: 16px;
-  }
-  
-  main.grid {
-    grid-template-columns: 1fr;
-    gap: 14px;
-  }
-  
-  .lemas-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-  
-  .info-grid {
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 12px;
-  }
-  
-  table {
-    font-size: 13px;
-  }
-  
-  table thead th, table tbody td {
-    padding: 10px 8px;
-  }
-  
-  .badge {
-    width: 32px;
-    height: 32px;
-    font-size: 12px;
-  }
-  
-  .match-teams {
-    font-size: 14px;
-  }
-  
-  .match-time {
-    font-size: 13px;
-  }
-}
-
-/* Móviles */
-@media (max-width: 480px) {
-  body {
-    padding: 8px;
-  }
-  
-  .container {
-    gap: 12px;
-  }
-  
-  header.tournament {
-    padding: 14px;
-    border-radius: 16px;
-  }
-  
-  header h1 {
-    font-size: 22px;
-  }
-  
-  header p {
-    font-size: 13px;
-  }
-  
-  header .buttons {
-    gap: 10px;
-  }
-  
-  header .buttons a {
-    flex: 1 1 100%;
-    padding: 12px;
-    font-size: 14px;
-  }
-  
-  .card {
-    padding: 14px;
-    border-radius: 14px;
-  }
-  
-  .card h3 {
-    font-size: 18px;
-  }
-  
-  main.grid {
-    gap: 12px;
-  }
-  
-  .lemas-grid {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-  
-  .lema {
-    padding: 10px;
-  }
-  
-  .info-grid {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-  
-  .info-item {
-    padding: 12px;
-  }
-  
-  table {
-    font-size: 12px;
-  }
-  
-  table thead th, table tbody td {
-    padding: 8px 6px;
-  }
-  
-  .badge {
-    width: 28px;
-    height: 28px;
-    font-size: 11px;
-  }
-  
-  .match-card {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 12px;
-  }
-  
-  .match-teams {
-    width: 100%;
-    justify-content: space-between;
-    margin-bottom: 8px;
-    font-size: 13px;
-  }
-  
-  .match-time {
-    width: 100%;
-    text-align: left;
-    font-size: 12px;
-    margin-top: 0;
-  }
-  
-  footer.note {
-    padding: 12px;
-    font-size: 13px;
-  }
-}
-
-/* Móviles muy pequeños */
-@media (max-width: 360px) {
-  body {
-    padding: 6px;
-  }
-  
-  header.tournament {
-    padding: 12px;
-  }
-  
-  header h1 {
-    font-size: 20px;
-  }
-  
-  header p {
-    font-size: 12px;
-  }
-  
-  .card {
-    padding: 12px;
-  }
-  
-  .card h3 {
-    font-size: 16px;
-  }
-  
-  table {
-    font-size: 11px;
-  }
-  
-  table thead th, table tbody td {
-    padding: 6px 4px;
-  }
-  
-  .badge {
-    width: 24px;
-    height: 24px;
-    font-size: 10px;
-  }
-  
-  .team-name {
-    gap: 6px;
-  }
-}
-
-/* Mejoras para tablas en móviles */
-.table-container {
-  overflow-x: auto;
-  border-radius: 10px;
-  -webkit-overflow-scrolling: touch; /* Mejor scroll en iOS */
-}
-
-/* Ajustes para elementos de texto largos en móviles */
-.team-name div:last-child {
-  word-break: break-word;
-}
-
-/* Mejoras de accesibilidad para modo oscuro/claro */
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg: #f0f6ff;
-    --card: #ffffff;
-    --muted: #6b7280;
-    --white: #1f2937;
-    --glass: rgba(0,0,0,0.05);
-  }
-  
-  body {
-    background:
-      radial-gradient(ellipse at 20% 20%, rgba(0, 245, 255, 0.1) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 80%, rgba(255, 0, 170, 0.1) 0%, transparent 50%),
-      radial-gradient(ellipse at 40% 40%, rgba(0, 255, 135, 0.05) 0%, transparent 50%),
-      linear-gradient(160deg, #f0f6ff 0%, #e6f0ff 100%);
-  }
-}
-
-/* Mejoras de rendimiento para dispositivos con preferencia de movimiento reducido */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-/* Orientación horizontal en móviles */
-@media (max-height: 500px) and (orientation: landscape) {
-  body {
-    padding: 8px;
-  }
-  
-  .container {
-    gap: 10px;
-  }
-  
-  header.tournament {
-    padding: 12px;
-  }
-  
-  .card {
-    padding: 12px;
-  }
-}
-
-/* Impresión */
-@media print {
-  :root {
-    --bg: white;
-    --card: white;
-    --accent1: #0066cc;
-    --accent2: #cc0066;
-    --accent3: #00aa66;
-    --accent4: #cc9900;
-    --muted: #666666;
-    --white: black;
-  }
-  
-  body {
-    background: white;
-    color: black;
-    padding: 0;
-  }
-  
-  .card {
-    box-shadow: none;
-    border: 1px solid #ddd;
-  }
-  
-  header.tournament::before,
-  .card::before,
-  .match-card::before,
-  .lema::before,
-  .info-item::before {
-    display: none;
-  }
-  
-  .floating-elements,
-  .particles {
-    display: none;
-  }
-}
-
-/* Efectos especiales para títulos */
-.special-title {
-  position: relative;
-  display: inline-block;
-}
-.special-title::after {
-  content: "";
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--accent1), transparent);
-  box-shadow: 0 0 8px var(--accent1);
-}
-
-/* Efecto de partículas */
-.particles {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: -1;
-}
-.particle {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: var(--accent1);
-  border-radius: 50%;
-  opacity: 0.3;
-  animation: particle-float 15s infinite linear;
-}
-@keyframes particle-float {
-  0% { transform: translateY(100vh) translateX(0); }
-  100% { transform: translateY(-100px) translateX(20px); }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torneo El Cristo - Champions League Style</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --ucl-blue: #0046ad;
+            --ucl-dark-blue: #001e4e;
+            --ucl-darker-blue: #001433;
+            --ucl-silver: #c0c0c0;
+            --ucl-green: #00a650;
+            --ucl-light-green: #00d46a;
+            --ucl-white: #ffffff;
+            --ucl-black: #111111;
+            --ucl-gray: #1a1a2e;
+            --ucl-light-gray: #2d2d44;
+            --ucl-red: #da291c;
+            --ucl-purple: #8a2be2;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--ucl-darker-blue) 0%, var(--ucl-dark-blue) 100%);
+            color: var(--ucl-white);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--ucl-dark-blue) 0%, var(--ucl-blue) 100%);
+            color: white;
+            padding: 10px 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+            background-size: cover;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 28px;
+            color: var(--ucl-green);
+            text-shadow: 0 0 10px rgba(0, 166, 80, 0.5);
+        }
+        
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--ucl-green), var(--ucl-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 15px;
+        }
+        
+        .nav-menu li {
+            position: relative;
+        }
+        
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s;
+            padding: 8px 15px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .nav-menu a:hover {
+            color: var(--ucl-green);
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .nav-menu .whatsapp {
+            background: rgba(0, 166, 80, 0.2);
+            border: 1px solid rgba(0, 166, 80, 0.4);
+        }
+        
+        .nav-menu .whatsapp:hover {
+            background: rgba(0, 166, 80, 0.3);
+        }
+        
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+        
+        /* Matches Section */
+        .matches-section {
+            background: linear-gradient(145deg, var(--ucl-gray) 0%, var(--ucl-light-gray) 100%);
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .matches-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--ucl-blue), var(--ucl-green));
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--ucl-blue);
+        }
+        
+        .section-title h2 {
+            font-size: 22px;
+            color: var(--ucl-green);
+            font-weight: 700;
+        }
+        
+        .section-title i {
+            color: var(--ucl-green);
+            font-size: 20px;
+        }
+        
+        .matches-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .match-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+            border-left: 4px solid var(--ucl-blue);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .match-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 70, 173, 0.1) 0%, rgba(0, 166, 80, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .match-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .match-card:hover::before {
+            opacity: 1;
+        }
+        
+        .match-teams {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .team {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            flex: 1;
+            justify-content: center;
+        }
+        
+        .team-logo {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--ucl-blue) 0%, var(--ucl-dark-blue) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .vs {
+            color: var(--ucl-silver);
+            font-weight: 500;
+            margin: 0 10px;
+            min-width: 40px;
+            text-align: center;
+        }
+        
+        .match-time {
+            color: var(--ucl-green);
+            font-weight: 600;
+            font-size: 14px;
+            position: relative;
+            z-index: 1;
+            min-width: 120px;
+            text-align: center;
+            background: rgba(0, 166, 80, 0.1);
+            padding: 5px 10px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 166, 80, 0.3);
+        }
+        
+        .view-all {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--ucl-green);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s;
+            padding: 8px 15px;
+            border-radius: 20px;
+            background: rgba(0, 166, 80, 0.1);
+            border: 1px solid rgba(0, 166, 80, 0.3);
+        }
+        
+        .view-all:hover {
+            color: var(--ucl-white);
+            background: rgba(0, 166, 80, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* Highlights Section */
+        .highlights-section {
+            background: linear-gradient(145deg, var(--ucl-gray) 0%, var(--ucl-light-gray) 100%);
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .highlights-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--ucl-green), var(--ucl-blue));
+        }
+        
+        .highlights-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .highlight-card {
+            padding: 15px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+            border-left: 4px solid var(--ucl-green);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .highlight-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 166, 80, 0.1) 0%, rgba(0, 70, 173, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .highlight-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .highlight-card:hover::before {
+            opacity: 1;
+        }
+        
+        .highlight-title {
+            font-weight: 700;
+            color: var(--ucl-green);
+            margin-bottom: 8px;
+            font-size: 16px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .highlight-desc {
+            font-size: 14px;
+            color: var(--ucl-silver);
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Teams Section */
+        .teams-section {
+            background: linear-gradient(145deg, var(--ucl-gray) 0%, var(--ucl-light-gray) 100%);
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            padding: 25px;
+            margin-top: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .teams-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--ucl-purple), var(--ucl-blue));
+        }
+        
+        .teams-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .team-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .team-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.1) 0%, rgba(0, 70, 173, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .team-card:hover::before {
+            opacity: 1;
+        }
+        
+        .team-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 15px;
+            background: linear-gradient(135deg, var(--ucl-purple) 0%, var(--ucl-blue) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .team-name {
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: var(--ucl-white);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .team-details {
+            font-size: 14px;
+            color: var(--ucl-silver);
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Tournament Info Section */
+        .tournament-info-section {
+            background: linear-gradient(145deg, var(--ucl-gray) 0%, var(--ucl-light-gray) 100%);
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            padding: 25px;
+            margin-top: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tournament-info-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--ucl-green), var(--ucl-purple));
+        }
+        
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .info-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s;
+            border-left: 4px solid var(--ucl-green);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .info-card:nth-child(2) {
+            border-left-color: var(--ucl-blue);
+        }
+        
+        .info-card:nth-child(3) {
+            border-left-color: var(--ucl-purple);
+        }
+        
+        .info-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 166, 80, 0.1) 0%, rgba(0, 70, 173, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .info-card:hover::before {
+            opacity: 1;
+        }
+        
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .info-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .info-title i {
+            font-size: 24px;
+            color: var(--ucl-green);
+        }
+        
+        .info-card:nth-child(2) .info-title i {
+            color: var(--ucl-blue);
+        }
+        
+        .info-card:nth-child(3) .info-title i {
+            color: var(--ucl-purple);
+        }
+        
+        .info-title h3 {
+            font-size: 18px;
+            color: var(--ucl-white);
+        }
+        
+        .info-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .info-content p {
+            margin-bottom: 10px;
+            color: var(--ucl-silver);
+        }
+        
+        .info-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .info-list li {
+            padding: 5px 0;
+            color: var(--ucl-silver);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .info-list li i {
+            color: var(--ucl-green);
+            font-size: 12px;
+        }
+        
+        /* Standings Section */
+        .standings-section {
+            background: linear-gradient(145deg, var(--ucl-gray) 0%, var(--ucl-light-gray) 100%);
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            padding: 25px;
+            margin-top: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .standings-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--ucl-blue), var(--ucl-green), var(--ucl-silver));
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        thead {
+            background: linear-gradient(to right, var(--ucl-blue), var(--ucl-dark-blue));
+            color: white;
+        }
+        
+        th {
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid var(--ucl-green);
+        }
+        
+        tbody tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+        
+        tbody tr:nth-child(even) {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+        
+        tbody tr:hover {
+            background-color: rgba(0, 70, 173, 0.2);
+            transform: scale(1.01);
+        }
+        
+        tbody tr.position-1 {
+            background: linear-gradient(to right, rgba(0, 166, 80, 0.2), transparent);
+            border-left: 4px solid var(--ucl-green);
+        }
+        
+        tbody tr.position-2 {
+            background: linear-gradient(to right, rgba(0, 70, 173, 0.2), transparent);
+            border-left: 4px solid var(--ucl-blue);
+        }
+        
+        tbody tr.position-3 {
+            background: linear-gradient(to right, rgba(192, 192, 192, 0.2), transparent);
+            border-left: 4px solid var(--ucl-silver);
+        }
+        
+        td {
+            padding: 12px 15px;
+        }
+        
+        .team-cell {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .team-badge {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, var(--ucl-blue) 0%, var(--ucl-dark-blue) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Top Scorers */
+        .scorers-section {
+            background: linear-gradient(145deg, var(--ucl-gray) 0%, var(--ucl-light-gray) 100%);
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            padding: 25px;
+            margin-top: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .scorers-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--ucl-green), var(--ucl-light-green));
+        }
+        
+        .scorer-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        
+        .scorer-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+            border-left: 4px solid var(--ucl-green);
+        }
+        
+        .scorer-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            background: rgba(0, 166, 80, 0.1);
+        }
+        
+        .scorer-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .scorer-name {
+            font-weight: 600;
+        }
+        
+        .scorer-team {
+            color: var(--ucl-silver);
+            font-size: 14px;
+        }
+        
+        .scorer-goals {
+            background: linear-gradient(135deg, var(--ucl-green) 0%, #008a3e 100%);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--ucl-dark-blue) 0%, var(--ucl-darker-blue) 100%);
+            color: white;
+            padding: 30px 0;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .footer-logo i {
+            font-size: 24px;
+            color: var(--ucl-green);
+        }
+        
+        .footer-logo h2 {
+            font-size: 20px;
+            background: linear-gradient(to right, var(--ucl-green), var(--ucl-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .footer-text {
+            color: var(--ucl-silver);
+            font-size: 14px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Floating Elements */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .floating-element {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: var(--ucl-green);
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: float 6s infinite ease-in-out;
+        }
+        
+        .floating-element:nth-child(2) {
+            width: 4px;
+            height: 4px;
+            background: var(--ucl-blue);
+            animation-delay: 1s;
+            top: 20%;
+            left: 10%;
+        }
+        
+        .floating-element:nth-child(3) {
+            width: 5px;
+            height: 5px;
+            background: var(--ucl-purple);
+            animation-delay: 2s;
+            top: 70%;
+            left: 80%;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-20px) translateX(10px); }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-menu {
+                gap: 10px;
+            }
+            
+            .nav-menu a {
+                font-size: 14px;
+                padding: 6px 10px;
+            }
+            
+            .teams-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-top {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .match-card {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .match-teams {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .match-time {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .teams-grid {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+                gap: 15px;
+            }
+            
+            .info-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .matches-section, .highlights-section, .standings-section, .scorers-section, .teams-section, .tournament-info-section {
+                padding: 20px;
+            }
+            
+            .section-title h2 {
+                font-size: 20px;
+            }
+            
+            th, td {
+                padding: 10px 8px;
+                font-size: 14px;
+            }
+            
+            .team {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .match-time {
+                font-size: 12px;
+                min-width: 100px;
+            }
+            
+            .teams-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .nav-menu {
+                gap: 5px;
+            }
+            
+            .nav-menu a {
+                font-size: 12px;
+                padding: 5px 8px;
+            }
+        }
+    </style>
 </head>
 <body>
-<!-- Partículas de fondo -->
-<div class="particles" id="particles"></div>
-
-<div class="container">
-  <header class="tournament card">
+    <!-- Floating Elements -->
     <div class="floating-elements">
-      <div class="floating-element"></div>
-      <div class="floating-element"></div>
-      <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
     </div>
-    <div class="tourney-info">
-      <h1><i class="fas fa-trophy"></i> Torneo El Cristo</h1>
-      <p id="tourney-slogan">⚽ Donde nace la pasión — fútbol, barrio y hermandad.</p>
-      <p>Fecha de inicio: <strong id="start-date">5/10/2025</strong></p>
+
+    <!-- Header -->
+    <header>
+        <div class="header-top">
+            <div class="logo">
+                <i class="fas fa-trophy"></i>
+                <h1>TORNEO EL CRISTO</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#partidos"><i class="far fa-futbol"></i> Partidos</a></li>
+                <li><a href="#clasificacion"><i class="fas fa-table"></i> Clasificación</a></li>
+                <li><a href="#equipos"><i class="fas fa-users"></i> Equipos</a></li>
+                <li><a href="https://wa.me/5212721140994" target="_blank" class="whatsapp"><i class="fab fa-whatsapp"></i> Informes</a></li>
+                <li><a href="https://wa.me/5212721810572" target="_blank" class="whatsapp"><i class="fas fa-pen-alt"></i> Inscripciones</a></li>
+                <li><a href="#info"><i class="fas fa-info-circle"></i> Información</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main-content">
+            <!-- Matches Section -->
+            <section class="matches-section" id="partidos">
+                <div class="section-title">
+                    <i class="far fa-futbol"></i>
+                    <h2>PRÓXIMOS PARTIDOS</h2>
+                </div>
+                <div class="matches-list">
+                    <div class="match-card">
+                        <div class="match-teams">
+                            <div class="team">
+                                <div class="team-logo">D</div>
+                                <span>Dorados</span>
+                            </div>
+                            <span class="vs">VS</span>
+                            <div class="team">
+                                <div class="team-logo">U</div>
+                                <span>UHC Leyendas</span>
+                            </div>
+                        </div>
+                        <div class="match-time">21 oct. 10:45</div>
+                    </div>
+                    
+                    <div class="match-card">
+                        <div class="match-teams">
+                            <div class="team">
+                                <div class="team-logo">P</div>
+                                <span>Peaky Blinder</span>
+                            </div>
+                            <span class="vs">VS</span>
+                            <div class="team">
+                                <div class="team-logo">R</div>
+                                <span>Real MR</span>
+                            </div>
+                        </div>
+                        <div class="match-time">21 oct. 10:45</div>
+                    </div>
+                    
+                    <div class="match-card">
+                        <div class="match-teams">
+                            <div class="team">
+                                <div class="team-logo">T</div>
+                                <span>Tiburones Rojos</span>
+                            </div>
+                            <span class="vs">VS</span>
+                            <div class="team">
+                                <div class="team-logo">S</div>
+                                <span>Sporting</span>
+                            </div>
+                        </div>
+                        <div class="match-time">21 oct. 15:00</div>
+                    </div>
+                    
+                    <div class="match-card">
+                        <div class="match-teams">
+                            <div class="team">
+                                <div class="team-logo">G</div>
+                                <span>Gorditos</span>
+                            </div>
+                            <span class="vs">VS</span>
+                            <div class="team">
+                                <div class="team-logo">T</div>
+                                <span>Titanes City FC</span>
+                            </div>
+                        </div>
+                        <div class="match-time">21 oct. 15:00</div>
+                    </div>
+                    
+                    <div class="match-card">
+                        <div class="match-teams">
+                            <div class="team">
+                                <div class="team-logo">I</div>
+                                <span>Infieles FC</span>
+                            </div>
+                            <span class="vs">VS</span>
+                            <div class="team">
+                                <div class="team-logo">L</div>
+                                <span>Linea Verde</span>
+                            </div>
+                        </div>
+                        <div class="match-time">21 oct. 15:00</div>
+                    </div>
+                </div>
+                <a href="#" class="view-all">Ver todos los partidos</a>
+            </section>
+
+            <!-- Highlights Section -->
+            <section class="highlights-section">
+                <div class="section-title">
+                    <i class="fas fa-star"></i>
+                    <h2>LO MÁS DESTACADO</h2>
+                </div>
+                <div class="highlights-list">
+                    <div class="highlight-card">
+                        <div class="highlight-title">EQUIPO DE LA SEMANA</div>
+                        <div class="highlight-desc">Los mejores jugadores de la jornada 2 del torneo</div>
+                    </div>
+                    
+                    <div class="highlight-card">
+                        <div class="highlight-title">TODOS LOS GOLES DE LA JORNADA 2</div>
+                        <div class="highlight-desc">Revive los mejores momentos de la última fecha</div>
+                    </div>
+                    
+                    <div class="highlight-card">
+                        <div class="highlight-title">LAS CLAVES DE LA VICTORIA DE DORADOS</div>
+                        <div class="highlight-desc">Análisis táctico del partido más destacado</div>
+                    </div>
+                    
+                    <div class="highlight-card">
+                        <div class="highlight-title">MÁXIMOS GOLEADORES: ADÁN POR DELANTE DE YAEL Y YANDEL</div>
+                        <div class="highlight-desc">Consulta la tabla de anotadores del torneo</div>
+                    </div>
+                    
+                    <div class="highlight-card">
+                        <div class="highlight-title">ANÁLISIS: LA MENTALIDAD GANADORA</div>
+                        <div class="highlight-desc">Cómo los equipos líderes mantienen su ventaja</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Teams Section -->
+        <section class="teams-section" id="equipos">
+            <div class="section-title">
+                <i class="fas fa-users"></i>
+                <h2>EQUIPOS PARTICIPANTES</h2>
+            </div>
+            <div class="teams-grid">
+                <div class="team-card">
+                    <div class="team-icon">D</div>
+                    <div class="team-name">DORADOS</div>
+                    <div class="team-details">Grupo A • 3 pts</div>
+                </div>
+                <div class="team-card">
+                    <div class="team-icon">I</div>
+                    <div class="team-name">INFIELES FC</div>
+                    <div class="team-details">Grupo B • 0 pts</div>
+                </div>
+                <div class="team-card">
+                    <div class="team-icon">P</div>
+                    <div class="team-name">PEAKY BLINDER</div>
+                    <div class="team-details">Grupo A • 0 pts</div>
+                </div>
+                <div class="team-card">
+                    <div class="team-icon">R</div>
+                    <div class="team-name">REAL MR</div>
+                    <div class="team-details">Grupo B • 3 pts</div>
+                </div>
+                <div class="team-card">
+                    <div class="team-icon">T</div>
+                    <div class="team-name">TIBURONES ROJOS</div>
+                    <div class="team-details">Grupo A • 0 pts</div>
+                </div>
+                <div class="team-card">
+                    <div class="team-icon">U</div>
+                    <div class="team-name">UHC LEYENDAS</div>
+                    <div class="team-details">Grupo B • 3 pts</div>
+                </div>
+                <div class="team-card">
+                    <div class="team-icon">G</div>
+                    <div class="team-name">GORDITOS</div>
+                    <div class="team-details">Grupo A • 0 pts</div>
+                </div>
+                <div class="team-card">
+                    <div class="team-icon">S</div>
+                    <div class="team-name">SPORTING</div>
+                    <div class="team-details">Grupo B • 3 pts</div>
+                </div>
+                <div class="team-card">
+                    <div class="team-icon">T</div>
+                    <div class="team-name">TITANES CITY FC</div>
+                    <div class="team-details">Grupo A • 0 pts</div>
+                </div>
+                <div class="team-card">
+                    <div class="team-icon">L</div>
+                    <div class="team-name">LINEA VERDE</div>
+                    <div class="team-details">Grupo B • 0 pts</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tournament Info Section -->
+        <section class="tournament-info-section" id="info">
+            <div class="section-title">
+                <i class="fas fa-info-circle"></i>
+                <h2>INFORMACIÓN DEL TORNEO</h2>
+            </div>
+            <div class="info-cards">
+                <div class="info-card">
+                    <div class="info-title">
+                        <i class="fas fa-file-signature"></i>
+                        <h3>INSCRIPCIONES</h3>
+                    </div>
+                    <div class="info-content">
+                        <p><strong>Costo:</strong> $150 MXN obligatoria</p>
+                        <p><strong>Fecha límite:</strong> Jornada 3</p>
+                        <p><strong>Requisitos:</strong></p>
+                        <ul class="info-list">
+                            <li><i class="fas fa-check"></i> Identificación oficial</li>
+                            <li><i class="fas fa-check"></i> Fotografía tamaño infantil</li>
+                            <li><i class="fas fa-check"></i> Pago completo</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-title">
+                        <i class="fas fa-id-card"></i>
+                        <h3>FICHAS</h3>
+                    </div>
+                    <div class="info-content">
+                        <p><strong>Costo:</strong> $30 MXN por jugador</p>
+                        <p><strong>Fecha límite:</strong> Jornada 4</p>
+                        <p><strong>Proceso:</strong></p>
+                        <ul class="info-list">
+                            <li><i class="fas fa-check"></i> Llenar formato oficial</li>
+                            <li><i class="fas fa-check"></i> Fotografía reciente</li>
+                            <li><i class="fas fa-check"></i> Validación por comité</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-title">
+                        <i class="fas fa-whistle"></i>
+                        <h3>ARBITRAJES</h3>
+                    </div>
+                    <div class="info-content">
+                        <p><strong>Costo:</strong> $170 MXN por equipo</p>
+                        <p><strong>Pago:</strong> Antes de cada partido</p>
+                        <p><strong>Incluye:</strong></p>
+                        <ul class="info-list">
+                            <li><i class="fas fa-check"></i> Árbitro principal</li>
+                            <li><i class="fas fa-check"></i> Dos asistentes</li>
+                            <li><i class="fas fa-check"></i> Reporte oficial</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Standings Section -->
+        <section class="standings-section" id="clasificacion">
+            <div class="section-title">
+                <i class="fas fa-table"></i>
+                <h2>TABLA DE CLASIFICACIÓN</h2>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Equipo</th>
+                            <th>PJ</th>
+                            <th>PG</th>
+                            <th>PE</th>
+                            <th>PP</th>
+                            <th>GF</th>
+                            <th>GC</th>
+                            <th>DG</th>
+                            <th>PTS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="position-1">
+                            <td>1</td>
+                            <td>
+                                <div class="team-cell">
+                                    <div class="team-badge">U</div>
+                                    <span>UHC Leyendas</span>
+                                </div>
+                            </td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>5</td>
+                            <td>1</td>
+                            <td>+4</td>
+                            <td>3</td>
+                        </tr>
+                        <tr class="position-2">
+                            <td>2</td>
+                            <td>
+                                <div class="team-cell">
+                                    <div class="team-badge">D</div>
+                                    <span>Dorados</span>
+                                </div>
+                            </td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>2</td>
+                            <td>0</td>
+                            <td>+2</td>
+                            <td>3</td>
+                        </tr>
+                        <tr class="position-3">
+                            <td>3</td>
+                            <td>
+                                <div class="team-cell">
+                                    <div class="team-badge">R</div>
+                                    <span>Real MR</span>
+                                </div>
+                            </td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>+1</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>
+                                <div class="team-cell">
+                                    <div class="team-badge">S</div>
+                                    <span>Sporting</span>
+                                </div>
+                            </td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>5</td>
+                            <td>4</td>
+                            <td>+1</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>
+                                <div class="team-cell">
+                                    <div class="team-badge">L</div>
+                                    <span>Linea Verde</span>
+                                </div>
+                            </td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>
+                                <div class="team-cell">
+                                    <div class="team-badge">G</div>
+                                    <span>Gorditos</span>
+                                </div>
+                            </td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>
+                                <div class="team-cell">
+                                    <div class="team-badge">T</div>
+                                    <span>Titanes City FC</span>
+                                </div>
+                            </td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>4</td>
+                            <td>5</td>
+                            <td>-1</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>
+                                <div class="team-cell">
+                                    <div class="team-badge">P</div>
+                                    <span>Peaky Blinder</span>
+                                </div>
+                            </td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>-1</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td>
+                                <div class="team-cell">
+                                    <div class="team-badge">I</div>
+                                    <span>Infieles FC</span>
+                                </div>
+                            </td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>2</td>
+                            <td>-2</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>
+                                <div class="team-cell">
+                                    <div class="team-badge">T</div>
+                                    <span>Tiburones Rojos</span>
+                                </div>
+                            </td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>5</td>
+                            <td>-5</td>
+                            <td>0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Top Scorers Section -->
+        <section class="scorers-section">
+            <div class="section-title">
+                <i class="fas fa-futbol"></i>
+                <h2>MÁXIMOS GOLEADORES</h2>
+            </div>
+            <div class="scorer-list">
+                <div class="scorer-item">
+                    <div class="scorer-info">
+                        <div class="scorer-name">Adán</div>
+                        <div class="scorer-team">UHC Leyendas</div>
+                    </div>
+                    <div class="scorer-goals">3 goles</div>
+                </div>
+                
+                <div class="scorer-item">
+                    <div class="scorer-info">
+                        <div class="scorer-name">Yandel</div>
+                        <div class="scorer-team">Titanes City FC</div>
+                    </div>
+                    <div class="scorer-goals">2 goles</div>
+                </div>
+                
+                <div class="scorer-item">
+                    <div class="scorer-info">
+                        <div class="scorer-name">Yael</div>
+                        <div class="scorer-team">Sporting</div>
+                    </div>
+                    <div class="scorer-goals">2 goles</div>
+                </div>
+                
+                <div class="scorer-item">
+                    <div class="scorer-info">
+                        <div class="scorer-name">Chaco</div>
+                        <div class="scorer-team">Real MR</div>
+                    </div>
+                    <div class="scorer-goals">1 gol</div>
+                </div>
+                
+                <div class="scorer-item">
+                    <div class="scorer-info">
+                        <div class="scorer-name">Carlos</div>
+                        <div class="scorer-team">UHC Leyendas</div>
+                    </div>
+                    <div class="scorer-goals">1 gol</div>
+                </div>
+            </div>
+        </section>
     </div>
-    <div class="buttons">
-      <a href="https://wa.me/5212721140994" target="_blank" class="glow-on-hover"><i class="fab fa-whatsapp"></i> Dudas / Informes</a>
-      <a href="https://wa.me/5212721810572" target="_blank" class="glow-on-hover"><i class="fas fa-pen-alt"></i> Inscripciones</a>
-    </div>
-  </header>
 
-  <section style="display:flex; justify-content:center; margin:20px 0;">
-    <div class="card" style="max-width:900px; width:100%; padding:20px;">
-      <h3 class="special-title" style="text-align:center;"><i class="fas fa-chart-bar"></i> INFORMES SOBRE EL TORNEO</h3>
-      <div class="info-grid">
-        <div class="info-item">
-          <h4><i class="fas fa-file-signature"></i> Inscripciones</h4>
-          <p>150 obligatoria — Jornada 3</p>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-trophy"></i>
+                <h2>TORNEO EL CRISTO</h2>
+            </div>
+            <p class="footer-text">Lugar: 2025-1edi15865324 fe150356258-1000 - equipo de la semana de la cisma.</p>
         </div>
-        <div class="info-item">
-          <h4><i class="fas fa-id-card"></i> Fichas</h4>
-          <p>30 por jugador — Jornada 4</p>
-        </div>
-        <div class="info-item">
-          <h4><i class="fas fa-whistle"></i> Arbitrajes</h4>
-          <p>170 por equipo</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    </footer>
 
-  <main class="grid">
-    <section>
-      <div class="card" style="margin-bottom:15px">
-        <h3><i class="fas fa-table"></i> Tabla de Posiciones</h3>
-        <div class="table-container">
-          <table class="standings" id="standings-table">
-            <thead>
-              <tr>
-                <th>#</th><th>Equipo</th>
-                <th class="center">PJ</th><th class="center">PG</th><th class="center">PE</th><th class="center">PP</th>
-                <th class="center">GF</th><th class="center">GC</th><th class="center">DG</th><th class="center">PTS</th>
-              </tr>
-            </thead>
-            <tbody id="standings-body"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="card">
-        <h3><i class="fas fa-calendar-alt"></i> Próximos Encuentros — Jornada 2</h3>
-        <div class="matches-list" id="matches-list"></div>
-      </div>
-    </section>
-
-    <aside>
-      <div class="card">
-        <h3><i class="fas fa-users"></i> Equipos participantes</h3>
-        <div class="lemas-grid" id="lemas-grid"></div>
-      </div>
-
-      <div class="card" style="margin-top:15px">
-        <h3><i class="fas fa-futbol"></i> Mejores Goleadores</h3>
-        <div class="table-container">
-          <table class="goleadores">
-            <thead>
-              <tr>
-                <th>Jugador</th>
-                <th>Equipo</th>
-                <th>Goles</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="goleador-row"><td>Adán</td><td>UHC LEYENDAS</td><td>3</td></tr>
-              <tr class="goleador-row"><td>Yandel</td><td>TITANES CITY FC.</td><td>2</td></tr>
-              <tr class="goleador-row"><td>Yael</td><td>SPORTING</td><td>2</td></tr>
-              <tr class="goleador-row"><td>Chaco</td><td>REAL MR.</td><td>1</td></tr>
-              <tr class="goleador-row"><td>Carlos</td><td>UHC LEYENDAS</td><td>1</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </aside>
-  </main>
-
-  <footer class="note">
-    <p>Derechos reservados <strong>Torneo El Cristo</strong> • Diseño inspirado en la Copa del Mundo</p>
-  </footer>
-</div>
-
-<script>
-const TEAMS = [
-  {name:"DORADOS", lema:""},
-  {name:"INFIELES FC", lema:""},
-  {name:"PEAKY BLINDER", lema:""},
-  {name:"REAL MR.", lema:""},
-  {name:"TIBURONES ROJOS", lema:""},
-  {name:"UHC LEYENDAS", lema:""},
-  {name:"GORDITOS", lema:""},
-  {name:"SPORTING", lema:""},
-  {name:"TITANES CITY FC.", lema:""},
-  {name:"LINEA VERDE", lema:""}
-];
-
-const tbody = document.getElementById('standings-body');
-const matchesList = document.getElementById('matches-list');
-const lemasGrid = document.getElementById('lemas-grid');
-const startDateEl = document.getElementById('start-date');
-
-let standings = [
-  {team:"UHC LEYENDAS",PJ:1,PG:1,PE:0,PP:0,GF:5,GC:1,DG:4,PTS:3},
-  {team:"DORADOS",PJ:1,PG:1,PE:0,PP:0,GF:2,GC:0,DG:2,PTS:3},
-  {team:"REAL MR.",PJ:1,PG:1,PE:0,PP:0,GF:1,GC:0,DG:1,PTS:3},
-  {team:"SPORTING",PJ:1,PG:1,PE:0,PP:0,GF:5,GC:4,DG:1,PTS:3},
-  {team:"LINEA VERDE",PJ:0,PG:0,PE:0,PP:0,GF:0,GC:0,DG:0,PTS:0},
-  {team:"GORDITOS",PJ:0,PG:0,PE:0,PP:0,GF:0,GC:0,DG:0,PTS:0},
-  {team:"TITANES CITY FC.",PJ:1,PG:0,PE:0,PP:1,GF:4,GC:5,DG:-1,PTS:0},
-  {team:"PEAKY BLINDER",PJ:1,PG:0,PE:0,PP:1,GF:0,GC:1,DG:-1,PTS:0},
-  {team:"INFIELES FC",PJ:1,PG:0,PE:0,PP:1,GF:0,GC:2,DG:-2,PTS:0},
-  {team:"TIBURONES ROJOS",PJ:1,PG:0,PE:0,PP:1,GF:0,GC:5,DG:-5,PTS:0}
-];
-
-function init(){
-  // Crear partículas de fondo
-  createParticles();
-  
-  startDateEl.textContent = new Date().toLocaleDateString('es-MX');
-  renderStandings();
-  renderLemas();
-  addMatchToList(0,3,"Domingo 12 de octubre 9:00 am — Fracc. El Cristo");
-  addMatchToList(9,7,"Domingo 12 de octubre 10:00 am — Fracc. El Cristo");
-  addMatchToList(4,2,"Domingo 12 de octubre 11:00 am — Fracc. El Cristo");
-  addMatchToList(5,1,"Domingo 12 de octubre 12:00 pm — Fracc. El Cristo");
-  addMatchToList(6,8,"Domingo 12 de octubre 13:00 pm — Fracc. El Cristo");
-}
-
-function createParticles() {
-  const particlesContainer = document.getElementById('particles');
-  for (let i = 0; i < 30; i++) {
-    const particle = document.createElement('div');
-    particle.classList.add('particle');
-    particle.style.left = `${Math.random() * 100}%`;
-    particle.style.animationDelay = `${Math.random() * 15}s`;
-    particle.style.animationDuration = `${15 + Math.random() * 10}s`;
-    particlesContainer.appendChild(particle);
-  }
-}
-
-function renderStandings(){
-  tbody.innerHTML = "";
-  standings.forEach((row,idx)=>{
-    const tr=document.createElement('tr');
-    let positionClass = "";
-    if(idx === 0) positionClass = "position-1";
-    else if(idx === 1) positionClass = "position-2";
-    else if(idx === 2) positionClass = "position-3";
-    
-    tr.className = positionClass;
-    tr.innerHTML=`
-      <td class="center">${idx+1}</td>
-      <td><div class="team-name"><div class="badge">${row.team.slice(0,2)}</div><div style="font-weight:700">${row.team}</div></div></td>
-      ${["PJ","PG","PE","PP","GF","GC","DG","PTS"].map(k=>`<td class="center">${row[k]}</td>`).join("")}
-    `;
-    tbody.appendChild(tr);
-  });
-}
-
-let matches=[];
-function addMatchToList(aIdx,bIdx,time){
-  matches.push({a:aIdx,b:bIdx,time});
-  renderMatches();
-}
-function renderMatches(){
-  matchesList.innerHTML="";
-  matches.forEach(m=>{
-    const div=document.createElement('div');div.className='match-card';
-    div.innerHTML=`
-      <div class="match-teams">
-        <div>${TEAMS[m.a].name}</div>
-        <div class="match-vs">vs</div>
-        <div>${TEAMS[m.b].name}</div>
-      </div>
-      <div class="match-time">${m.time}</div>
-    `;
-    matchesList.appendChild(div);
-  });
-}
-
-function renderLemas(){
-  lemasGrid.innerHTML="";
-  TEAMS.forEach(t=>{
-    const div=document.createElement('div');div.className='lema';
-    div.innerHTML=`<h4>${t.name}</h4><p>${t.lema}</p>`;
-    lemasGrid.appendChild(div);
-  });
-}
-
-init();
-</script>
+    <script>
+        // Simple script to add interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add floating elements
+            const floatingContainer = document.querySelector('.floating-elements');
+            for (let i = 0; i < 15; i++) {
+                const element = document.createElement('div');
+                element.classList.add('floating-element');
+                element.style.left = `${Math.random() * 100}%`;
+                element.style.top = `${Math.random() * 100}%`;
+                element.style.animationDelay = `${Math.random() * 6}s`;
+                element.style.animationDuration = `${6 + Math.random() * 6}s`;
+                floatingContainer.appendChild(element);
+            }
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
 
